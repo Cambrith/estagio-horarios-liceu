@@ -1,0 +1,22 @@
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Editores
+.vscode/
+.idea/
+
+# Dependências e builds (para quando o projeto crescer)
+node_modules/
+dist/
+build/
+
+# Segredos: nunca versionar
+.env
+.env.*
+*.key
+*.pem
+
+# Temporários e arquivos de trava do Office
+~$*
+*.tmp

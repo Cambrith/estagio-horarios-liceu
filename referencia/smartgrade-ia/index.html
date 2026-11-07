@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SmartGrade IA · Horários acadêmicos</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560;9..144,680&family=Outfit:wght@380;480;580;650&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <section id="loginScreen" class="login-screen">
+    <div class="login-hero">
+      <img class="logo-lpp" src="/img/lpp.png" alt="LPP Unifeso">
+      <p class="eyebrow">Unifeso · Ciência da Computação · 2026.2</p>
+      <h1>SmartGrade IA</h1>
+      <p class="lede">Sistema Inteligente de Geração e Otimização de Horários Acadêmicos. A grade deixa de ser uma tabela montada à mão e passa a ser uma solução com conflito zero e decisão rastreável.</p>
+      <ul class="hero-points">
+        <li>Professores, turmas e salas no mesmo modelo.</li>
+        <li>Restrições obrigatórias inviabilizam o que não pode acontecer.</li>
+        <li>Preferências, janelas e laboratórios entram na pontuação.</li>
+      </ul>
+    </div>
+    <form id="formLogin" class="login-panel">
+      <h2>Entrar</h2>
+      <label>E-mail<input id="email" type="email" autocomplete="username" required value="coordenador@unifeso.edu.br"></label>
+      <label>Senha<input id="senha" type="password" autocomplete="current-password" required value="[senha omitida]"></label>
+      <button class="btn-primary" type="submit">Acessar o sistema</button>
+      <div class="demo-accounts">
+        <p>Contas de demonstração, senha <code>[senha omitida]</code></p>
+        <button type="button" data-email="coordenador@unifeso.edu.br">Coordenador</button>
+        <button type="button" data-email="professor@unifeso.edu.br">Professor</button>
+        <button type="button" data-email="aluno@unifeso.edu.br">Aluno</button>
+        <button type="button" data-email="gestor@unifeso.edu.br">Gestor</button>
+      </div>
+    </form>
+    <footer class="site-footer">
+      <img src="/img/rodrigo.png" alt="Rodrigo Braga Tere">
+    </footer>
+  </section>
+
+  <div id="appShell" class="shell" hidden>
+    <aside class="sidebar">
+      <div class="brand">
+        <img class="logo-lpp" src="/img/lpp.png" alt="LPP Unifeso">
+        <span>SmartGrade IA</span>
+        <small>Horários 2026.2</small>
+      </div>
+      <nav>
+        <button type="button" data-view-link="dashboard">Painel</button>
+        <button type="button" data-view-link="grade">Grade</button>
+        <button type="button" data-view-link="cadastros">Cadastros</button>
+        <button type="button" data-view-link="disponibilidade">Disponibilidade</button>
+        <button type="button" data-view-link="restricoes">Restrições</button>
+        <button type="button" data-view-link="relatorios">Relatórios</button>
+      </nav>
+      <div class="who">
+        <strong id="usuarioNome"></strong>
+        <span id="usuarioPerfil"></span>
+        <button type="button" id="btnSair" class="btn-ghost light">Sair</button>
+      </div>
+    </aside>
+    <main class="workspace">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Ciência da Computação · Noturno</p>
+          <h2>Planejamento acadêmico</h2>
+        </div>
+        <span id="modoBanco" class="selo warn">Demonstração em memória</span>
+      </header>
+
+      <section id="view-dashboard" class="view">
+        <div id="dashboardBody"></div>
+      </section>
+
+      <section id="view-grade" class="view" hidden>
+        <div class="grade-container">
+          <header class="grade-header">
+            <div>
+              <img class="logo-lpp" src="/img/lpp.png" alt="LPP Unifeso">
+              <h1>SmartGrade IA</h1>
+              <span>Ciência da Computação | 2026.2</span>
+            </div>
+            <div class="grade-actions">
+              <button type="button" id="btnReotimizar" class="btn-ghost">Reotimizar turma</button>
+              <button type="button" id="btnAprovar" class="btn-ghost">Aprovar grade</button>
+              <button type="button" id="btnGerar" class="btn-primary">Gerar grade otimizada</button>
+            </div>
+          </header>
+          <div class="grade-toolbar">
+            <label>Grade salva<select id="filtroGrade"></select></label>
+            <label>Visão<select id="filtroVisao"><option value="turma">Turma</option><option value="professor">Professor</option><option value="sala">Sala</option></select></label>
+            <label>Filtro<select id="filtroEntidade"></select></label>
+            <div class="legend">
+              <span class="pill valido">Válido</span>
+              <span class="pill preferencia">Preferência</span>
+              <span class="pill conflito">Conflito</span>
+            </div>
+          </div>
+          <div class="grade-layout">
+            <div class="grade-main">
+              <div class="grade-scroll">
+                <div id="gradeGrid" class="grade-grid"></div>
+              </div>
+              <section id="gradeConflitos" class="side-card" hidden></section>
+            </div>
+            <aside id="gradeSide"></aside>
+          </div>
+        </div>
+      </section>
+
+      <section id="view-cadastros" class="view" hidden><div id="cadastrosBody"></div></section>
+      <section id="view-disponibilidade" class="view" hidden><div id="disponibilidadeBody" class="panel"></div></section>
+      <section id="view-restricoes" class="view" hidden><div id="restricoesBody"></div></section>
+      <section id="view-relatorios" class="view" hidden><div id="relatoriosBody"></div></section>
+    </main>
+    <footer class="site-footer">
+      <img src="/img/rodrigo.png" alt="Rodrigo Braga Tere">
+    </footer>
+  </div>
+
+  <div id="toast" class="toast-stack"></div>
+  <div id="modal" class="modal" hidden></div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script>
+  <script type="module" src="/js/app.js"></script>
+  <script>
+    document.querySelectorAll('[data-email]').forEach((botao) => {
+      botao.addEventListener('click', () => {
+        document.getElementById('email').value = botao.dataset.email;
+        document.getElementById('senha').value = '[senha omitida]';
+      });
+    });
+  </script>
+</body>
+</html>
