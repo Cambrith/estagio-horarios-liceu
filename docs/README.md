@@ -10,6 +10,7 @@ Documentos do projeto.
 | `analise/resumo-informal.md` | Resumo curto e informal: o que descobrimos e o que sugiro criar para o Liceu. Comece por ele. |
 | `analise/relatorio.md` | Relatório: o que fazer, passos dos slides, modelo de dados, regras e passos de construção. |
 | `analise/smartgrade-ia-analise-profunda.md` | Análise do site de referência: arquitetura, motor de geração, regras testadas, falhas, permissões por perfil e dados de exemplo. |
+| `duvidas.md` | Todas as perguntas a fazer ao professor, à escola e ao grupo, com prioridade e espaço para a resposta. |
 | `ideias.md` | Caderno de ideias para começar a trabalhar. |
 
 O contrato da API do site de referência está em `../referencia/smartgrade-ia/API.md`.
