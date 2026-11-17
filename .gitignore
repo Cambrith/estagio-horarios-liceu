@@ -20,3 +20,7 @@ build/
 # Temporários e arquivos de trava do Office
 ~$*
 *.tmp
+
+# Firebase local cache e logs
+.firebase/
+firebase-debug.log
