@@ -24,3 +24,8 @@ build/
 # Firebase local cache e logs
 .firebase/
 firebase-debug.log
+
+# Skills locais de agentes
+.agents/
+.claude/
+skills-lock.json
