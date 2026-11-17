@@ -36,6 +36,7 @@ Um sistema web que cadastra professores, disciplinas e turmas, aloca as aulas e 
 ├── AGENTS.md                         instruções para agentes de IA
 ├── docs/
 │   ├── README.md                     índice dos documentos
+│   ├── especificacao.md              requisitos RF01–RF08, casos de uso e modelo de dados
 │   ├── ideias.md                     caderno de ideias para começar
 │   ├── Plano_Atividades_...docx      ficha enviada pelo professor
 │   ├── Apresentacao_...pptx          apresentação enviada pelo professor
@@ -46,9 +47,14 @@ Um sistema web que cadastra professores, disciplinas e turmas, aloca as aulas e 
 ├── referencia/
 │   ├── horario-exemplo/              imagem do horário de exemplo (slide 3)
 │   └── smartgrade-ia/                front-end copiado do site e API.md
-├── src/                              código do projeto (a criar)
+├── src/                              código do projeto (v1 Nível Base)
+│   ├── index.html                    interface com as 6 telas
+│   ├── css/style.css                 estilos responsivos e de impressão
+│   └── js/                           validacao.js, dados-slide3.js, storage.js, csv.js, gerador.js e app.js
 ├── prototipos/                       protótipos das telas (a criar)
-└── testes/                           cenários de teste e evidências (a criar)
+└── testes/                           cenários de conflito e evidências
+    ├── validacao.test.js             testes automatizados (Node.js)
+    └── evidencias.md                 registro da execução dos testes
 ```
 
 ## Sobre os arquivos do professor

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema de Horários Escolares — Liceu São José de Itaipava</title>
+  <link rel="icon" href="img/brasao-liceu-escudo.png" type="image/png">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#conteudo-principal">Ir para o conteúdo principal</a>
+
+  <header class="topo">
+    <div class="topo-marca">
+      <img src="img/brasao-liceu-escudo.png" alt="Brasão do Liceu São José de Itaipava" class="logo-brasao">
+      <div>
+        <h1>Quadro de Horários</h1>
+        <span class="subtitulo">Liceu São José de Itaipava · Coordenação Pedagógica</span>
+      </div>
+    </div>
+    <nav class="menu-principal" aria-label="Telas do sistema">
+      <button type="button" class="nav-btn ativo" data-tela="dashboard">Dashboard</button>
+      <button type="button" class="nav-btn" data-tela="professores">Professores</button>
+      <button type="button" class="nav-btn" data-tela="disciplinas">Disciplinas</button>
+      <button type="button" class="nav-btn" data-tela="turmas">Turmas e Horários</button>
+      <button type="button" class="nav-btn" data-tela="alocacao">Alocação</button>
+      <button type="button" class="nav-btn" data-tela="quadro">Quadro</button>
+    </nav>
+  </header>
+
+  <main id="conteudo-principal" class="container">
+    <!-- 1. DASHBOARD -->
+    <section id="tela-dashboard" class="tela ativa" aria-labelledby="titulo-dashboard">
+      <div class="cabecalho-tela">
+        <div>
+          <h2 id="titulo-dashboard">Dashboard</h2>
+          <span id="status-grade-badge" class="badge-status rascunho">Rascunho</span>
+        </div>
+        <div class="acoes-linha">
+          <button type="button" id="btn-aprovar-grade" class="btn btn-primario">Aprovar grade</button>
+          <button type="button" id="btn-carregar-exemplo" class="btn btn-secundario">Restaurar exemplo (23 profs)</button>
+          <button type="button" id="btn-exportar-json" class="btn btn-secundario">Exportar JSON</button>
+          <label class="btn btn-secundario btn-arquivo">
+            Importar JSON
+            <input type="file" id="input-importar-json" accept="application/json" hidden>
+          </label>
+          <button type="button" id="btn-limpar-tudo" class="btn btn-perigo">Limpar dados</button>
+        </div>
+      </div>
+
+      <div id="feedback-dashboard" class="feedback" role="alert" aria-live="polite" hidden style="margin-bottom: 1rem;"></div>
+
+      <div id="cards-resumo" class="grid-cards" aria-live="polite"></div>
+
+      <div class="grid-duas-colunas">
+        <article class="card">
+          <h3>Conflitos detectados</h3>
+          <div id="lista-conflitos-dashboard" class="lista-alertas"></div>
+        </article>
+        <article class="card">
+          <h3>Carga horária (faltando ou excedente)</h3>
+          <div id="lista-carga-dashboard" class="lista-alertas"></div>
+        </article>
+      </div>
+
+      <article class="card painel-extra">
+        <h3>Histórico recente de alterações</h3>
+        <div id="lista-historico-dashboard" class="lista-alertas"></div>
+      </article>
+    </section>
+
+    <!-- 2. PROFESSORES -->
+    <section id="tela-professores" class="tela" aria-labelledby="titulo-professores" hidden>
+      <h2 id="titulo-professores">Professores</h2>
+      <div class="grid-duas-colunas">
+        <form id="form-professor" class="card formulario">
+          <h3 id="titulo-form-professor">Novo professor</h3>
+          <input type="hidden" id="prof-id">
+
+          <div class="campo">
+            <label for="prof-nome">Nome completo</label>
+            <input type="text" id="prof-nome" required placeholder="Ex.: Ana Paula Silva">
+          </div>
+
+          <fieldset class="campo-grupo">
+            <legend>Disciplinas habilitadas</legend>
+            <div id="prof-disciplinas-opcoes" class="lista-checkboxes"></div>
+          </fieldset>
+
+          <div class="acoes-linha">
+            <button type="submit" class="btn btn-primario">Salvar professor</button>
+            <button type="button" id="btn-cancelar-prof" class="btn btn-secundario" hidden>Cancelar</button>
+          </div>
+        </form>
+
+        <article class="card">
+          <h3>Professores cadastrados</h3>
+          <div id="lista-professores" class="tabela-wrapper"></div>
+        </article>
+      </div>
+
+      <article id="painel-disponibilidade" class="card painel-extra" hidden>
+        <div class="cabecalho-tela">
+          <h3 id="titulo-disponibilidade">Disponibilidade do professor</h3>
+          <button type="button" id="btn-fechar-disp" class="btn btn-secundario btn-pequeno">Fechar</button>
+        </div>
+        <p class="texto-vazio">Clique nos horários abaixo para alternar entre <strong>Disponível</strong> e <strong>Indisponível</strong>.</p>
+        <div id="grade-disponibilidade" class="tabela-wrapper"></div>
+      </article>
+    </section>
+
+    <!-- 3. DISCIPLINAS -->
+    <section id="tela-disciplinas" class="tela" aria-labelledby="titulo-disciplinas" hidden>
+      <h2 id="titulo-disciplinas">Disciplinas</h2>
+      <div class="grid-duas-colunas">
+        <form id="form-disciplina" class="card formulario">
+          <h3 id="titulo-form-disciplina">Nova disciplina</h3>
+          <input type="hidden" id="disc-id">
+
+          <div class="campo">
+            <label for="disc-nome">Nome da disciplina</label>
+            <input type="text" id="disc-nome" required placeholder="Ex.: Matemática">
+          </div>
+
+          <div class="campo">
+            <label for="disc-carga">Aulas por semana (carga semanal)</label>
+            <input type="number" id="disc-carga" min="1" max="20" value="2" required>
+          </div>
+
+          <div class="acoes-linha">
+            <button type="submit" class="btn btn-primario">Salvar disciplina</button>
+            <button type="button" id="btn-cancelar-disc" class="btn btn-secundario" hidden>Cancelar</button>
+          </div>
+        </form>
+
+        <article class="card">
+          <h3>Disciplinas cadastradas</h3>
+          <div id="lista-disciplinas" class="tabela-wrapper"></div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 4. TURMAS E HORÁRIOS -->
+    <section id="tela-turmas" class="tela" aria-labelledby="titulo-turmas" hidden>
+      <h2 id="titulo-turmas">Turmas e Faixas de Horário</h2>
+      <div class="grid-duas-colunas">
+        <div class="coluna-empilhada">
+          <form id="form-turma" class="card formulario">
+            <h3 id="titulo-form-turma">Nova turma</h3>
+            <input type="hidden" id="turma-id">
+
+            <div class="campo">
+              <label for="turma-nome">Nome da turma</label>
+              <input type="text" id="turma-nome" required placeholder="Ex.: 1º Ano A">
+            </div>
+
+            <div class="grid-campos">
+              <div class="campo">
+                <label for="turma-nivel">Nível</label>
+                <select id="turma-nivel">
+                  <option value="Fundamental">Fundamental</option>
+                  <option value="Médio">Médio</option>
+                </select>
+              </div>
+              <div class="campo">
+                <label for="turma-turno">Turno</label>
+                <select id="turma-turno">
+                  <option value="Manhã">Manhã</option>
+                  <option value="Tarde">Tarde</option>
+                  <option value="Noite">Noite</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="acoes-linha">
+              <button type="submit" class="btn btn-primario">Salvar turma</button>
+              <button type="button" id="btn-cancelar-turma" class="btn btn-secundario" hidden>Cancelar</button>
+            </div>
+          </form>
+
+          <article class="card">
+            <h3>Turmas cadastradas</h3>
+            <div id="lista-turmas" class="tabela-wrapper"></div>
+          </article>
+        </div>
+
+        <div class="coluna-empilhada">
+          <form id="form-horario" class="card formulario">
+            <h3 id="titulo-form-horario">Nova faixa de horário</h3>
+            <input type="hidden" id="horario-id">
+
+            <div class="campo">
+              <label for="horario-rotulo">Rótulo</label>
+              <input type="text" id="horario-rotulo" required placeholder="Ex.: 1ª aula">
+            </div>
+
+            <div class="grid-campos">
+              <div class="campo">
+                <label for="horario-inicio">Início</label>
+                <input type="time" id="horario-inicio" required value="07:30">
+              </div>
+              <div class="campo">
+                <label for="horario-fim">Fim</label>
+                <input type="time" id="horario-fim" required value="08:20">
+              </div>
+            </div>
+
+            <div class="acoes-linha">
+              <button type="submit" class="btn btn-primario">Salvar horário</button>
+              <button type="button" id="btn-cancelar-horario" class="btn btn-secundario" hidden>Cancelar</button>
+            </div>
+          </form>
+
+          <article class="card">
+            <h3>Horários cadastrados</h3>
+            <div id="lista-horarios" class="tabela-wrapper"></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. ALOCAÇÃO -->
+    <section id="tela-alocacao" class="tela" aria-labelledby="titulo-alocacao" hidden>
+      <h2 id="titulo-alocacao">Alocação de Aulas</h2>
+      <div class="grid-duas-colunas">
+        <form id="form-alocacao" class="card formulario">
+          <h3 id="titulo-form-alocacao">Alocar aula</h3>
+          <input type="hidden" id="aloc-id">
+
+          <div class="campo">
+            <label for="aloc-disciplina">Disciplina</label>
+            <select id="aloc-disciplina" required></select>
+          </div>
+
+          <div class="campo">
+            <label for="aloc-professor">Professor</label>
+            <select id="aloc-professor" required></select>
+          </div>
+
+          <fieldset class="campo-grupo">
+            <legend>Turma(s) — marque mais de uma para aula conjunta</legend>
+            <div id="aloc-turmas-opcoes" class="lista-checkboxes"></div>
+          </fieldset>
+
+          <div class="grid-campos">
+            <div class="campo">
+              <label for="aloc-dia">Dia da semana</label>
+              <select id="aloc-dia" required></select>
+            </div>
+            <div class="campo">
+              <label for="aloc-horario">Horário</label>
+              <select id="aloc-horario" required></select>
+            </div>
+          </div>
+
+          <label class="checkbox-item">
+            <input type="checkbox" id="aloc-geminada">
+            Aula geminada (alocar também no próximo horário do mesmo dia)
+          </label>
+
+          <div id="aloc-progresso-carga" class="texto-vazio" aria-live="polite"></div>
+
+          <div id="aloc-feedback" class="feedback" role="alert" aria-live="assertive" hidden></div>
+
+          <div class="acoes-linha">
+            <button type="submit" class="btn btn-primario">Salvar alocação</button>
+            <button type="button" id="btn-cancelar-aloc" class="btn btn-secundario" hidden>Cancelar</button>
+          </div>
+        </form>
+
+        <article class="card">
+          <h3>Aulas alocadas</h3>
+          <div id="lista-alocacoes" class="tabela-wrapper"></div>
+        </article>
+      </div>
+
+      <article class="card painel-extra">
+        <div class="cabecalho-tela">
+          <h3>Preenchimento assistido (completar aulas faltantes)</h3>
+          <div class="acoes-linha">
+            <select id="gen-turma" aria-label="Turma para completar">
+              <option value="">Todas as turmas</option>
+            </select>
+            <button type="button" id="btn-gerar-alternativas" class="btn btn-primario">Calcular 3 sugestões</button>
+          </div>
+        </div>
+        <p class="texto-vazio">Distribui as aulas restantes respeitando conflitos de turma, habilitação e indisponibilidade dos professores.</p>
+        <div id="lista-alternativas" class="grid-cards" style="margin-top: 0.85rem; margin-bottom: 0;"></div>
+      </article>
+    </section>
+
+    <!-- 6. QUADRO -->
+    <section id="tela-quadro" class="tela" aria-labelledby="titulo-quadro" hidden>
+      <div class="cabecalho-tela">
+        <h2 id="titulo-quadro">Quadro de Horários</h2>
+        <div class="acoes-linha no-print">
+          <button type="button" id="btn-exportar-csv-visao" class="btn btn-secundario">Exportar CSV (visão atual)</button>
+          <button type="button" id="btn-exportar-csv-tudo" class="btn btn-secundario">Exportar CSV (completo)</button>
+          <button type="button" id="btn-imprimir" class="btn btn-secundario">Imprimir quadro</button>
+        </div>
+      </div>
+
+      <div class="card filtros-quadro no-print">
+        <div class="grid-campos">
+          <div class="campo">
+            <label for="quadro-visao">Consultar por</label>
+            <select id="quadro-visao">
+              <option value="turma">Turma</option>
+              <option value="professor">Professor</option>
+              <option value="dia">Dia da semana</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label for="quadro-filtro">Selecionar item</label>
+            <select id="quadro-filtro"></select>
+          </div>
+        </div>
+      </div>
+
+      <article class="card">
+        <div class="cabecalho-impressao">
+          <img src="img/brasao-liceu-escudo.png" alt="" class="logo-impressao-escudo">
+          <img src="img/logo-liceu-texto.png" alt="Liceu de Itaipava" class="logo-impressao-texto">
+        </div>
+        <h3 id="quadro-titulo-resultado">Grade semanal</h3>
+        <p class="texto-vazio no-print" style="margin-bottom: 0.65rem;">Dica: na visão por Turma ou Professor, arraste uma aula para outro horário para movê-la com validação instantânea.</p>
+        <div id="quadro-feedback" class="feedback" role="alert" aria-live="assertive" hidden style="margin-bottom: 0.75rem;"></div>
+        <div id="quadro-conteudo" class="tabela-wrapper"></div>
+      </article>
+
+      <article class="card painel-extra no-print">
+        <h3>Buscar professor substituto</h3>
+        <div class="grid-campos">
+          <div class="campo">
+            <label for="sub-dia">Dia da semana</label>
+            <select id="sub-dia"></select>
+          </div>
+          <div class="campo">
+            <label for="sub-horario">Horário</label>
+            <select id="sub-horario"></select>
+          </div>
+        </div>
+        <div class="campo" style="margin-top: 0.75rem;">
+          <label for="sub-disciplina">Disciplina da aula (opcional)</label>
+          <select id="sub-disciplina"></select>
+        </div>
+        <div id="resultado-substitutos" class="lista-alertas" style="margin-top: 0.85rem;"></div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="rodape-institucional no-print">
+    <img src="img/logo-liceu-texto.png" alt="Liceu de Itaipava" class="logo-rodape">
+    <span>Sistema de Gestão de Horários Escolares · Estágio Técnico em Informática</span>
+  </footer>
+
+  <script defer src="js/validacao.js"></script>
+  <script defer src="js/dados-slide3.js"></script>
+  <script defer src="js/storage.js"></script>
+  <script defer src="js/csv.js"></script>
+  <script defer src="js/gerador.js"></script>
+  <script defer src="js/app.js"></script>
+</body>
+</html>
