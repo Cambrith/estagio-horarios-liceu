@@ -137,16 +137,21 @@ test('11. Exportação CSV deve respeitar exatamente a visão filtrada', () => {
   assert.match(csvCompleto, /1º Ano B/);
 });
 
-test('12. Massa completa do Slide 3 (23 professores e 7 turmas) inicia sem conflitos', () => {
+test('12. Massa completa do Slide 3 (23 professores e 7 turmas) inicia vazia e sem conflitos', () => {
   const slide3 = criarDadosSlide3();
   assert.equal(slide3.professores.length, 23);
   assert.equal(slide3.turmas.length, 7);
+  assert.equal(slide3.alocacoes.length, 0);
   const res = validarGradeCompleta(slide3);
   assert.equal(res.conflitos.length, 0);
 });
 
 test('13. Gerador automático gera 3 alternativas determinísticas sem conflitos', () => {
   const slide3 = criarDadosSlide3();
+  slide3.alocacoes.push(
+    { id: 'seed_1', turmaIds: ['t_1bas'], disciplinaId: 'd_geo', professorId: 'p_marcelo', dia: 'Segunda', horarioId: 'h_1' },
+    { id: 'seed_2', turmaIds: ['t_1bas'], disciplinaId: 'd_fis', professorId: 'p_pedro', dia: 'Segunda', horarioId: 'h_2' }
+  );
   const alts = gerarAlternativas(slide3);
   assert.equal(alts.length, 3);
   assert.ok(alts[0].totalAdicionadas > 0);

@@ -79,60 +79,8 @@
       { id: 'h_7', rotulo: '7ª aula', inicio: '12:40', fim: '13:30' }
     ];
 
-    // Amostra fiel da Segunda e Terça do Slide 3 (com aulas conjuntas e geminadas)
-    const alocacoes = [
-      // Segunda - 1º BÁSICO
-      { id: 's3_1', turmaIds: ['t_1bas'], disciplinaId: 'd_geo', professorId: 'p_marcelo', dia: 'Segunda', horarioId: 'h_1' },
-      { id: 's3_2', turmaIds: ['t_1bas'], disciplinaId: 'd_fil', professorId: 'p_marcio', dia: 'Segunda', horarioId: 'h_2' },
-      { id: 's3_3', turmaIds: ['t_1bas'], disciplinaId: 'd_fis', professorId: 'p_pedro', dia: 'Segunda', horarioId: 'h_3' },
-      { id: 's3_4', turmaIds: ['t_1bas'], disciplinaId: 'd_fis', professorId: 'p_pedro', dia: 'Segunda', horarioId: 'h_4' },
-
-      // Segunda - 2º A (FP + TI) e 2º B (FP + TI) com aulas conjuntas
-      { id: 's3_5', turmaIds: ['t_2afp', 't_2bfp'], disciplinaId: 'd_art', professorId: 'p_mauricio', dia: 'Segunda', horarioId: 'h_1' },
-      { id: 's3_6', turmaIds: ['t_2ati', 't_2bti'], disciplinaId: 'd_cont', professorId: 'p_marcal', dia: 'Segunda', horarioId: 'h_1' },
-      { id: 's3_7', turmaIds: ['t_2afp', 't_2ati'], disciplinaId: 'd_fis', professorId: 'p_pedro', dia: 'Segunda', horarioId: 'h_2' },
-      { id: 's3_8', turmaIds: ['t_2bfp', 't_2bti'], disciplinaId: 'd_geo', professorId: 'p_marcelo', dia: 'Segunda', horarioId: 'h_2' },
-      { id: 's3_9', turmaIds: ['t_2afp', 't_2bfp'], disciplinaId: 'd_art', professorId: 'p_mauricio', dia: 'Segunda', horarioId: 'h_3' },
-      { id: 's3_10', turmaIds: ['t_2ati', 't_2bti'], disciplinaId: 'd_lp', professorId: 'p_rodrigo', dia: 'Segunda', horarioId: 'h_3' },
-      { id: 's3_11', turmaIds: ['t_2ati', 't_2bti'], disciplinaId: 'd_lp', professorId: 'p_rodrigo', dia: 'Segunda', horarioId: 'h_4' },
-      { id: 's3_12', turmaIds: ['t_2afp', 't_2ati'], disciplinaId: 'd_fis', professorId: 'p_pedro', dia: 'Segunda', horarioId: 'h_5' },
-      { id: 's3_13', turmaIds: ['t_2bfp', 't_2bti'], disciplinaId: 'd_his', professorId: 'p_paulofelipe', dia: 'Segunda', horarioId: 'h_5' },
-      { id: 's3_14', turmaIds: ['t_2afp', 't_2ati', 't_2bfp', 't_2bti'], disciplinaId: 'd_soc', professorId: 'p_marcio', dia: 'Segunda', horarioId: 'h_6' },
-
-      // Segunda - 3º FP e 3º TI
-      { id: 's3_15', turmaIds: ['t_3fp', 't_3ti'], disciplinaId: 'd_soc', professorId: 'p_marcio', dia: 'Segunda', horarioId: 'h_1' },
-      { id: 's3_16', turmaIds: ['t_3fp'], disciplinaId: 'd_art', professorId: 'p_mauricio', dia: 'Segunda', horarioId: 'h_2' },
-      { id: 's3_17', turmaIds: ['t_3ti'], disciplinaId: 'd_lp', professorId: 'p_rodrigo', dia: 'Segunda', horarioId: 'h_2' },
-      { id: 's3_18', turmaIds: ['t_3fp', 't_3ti'], disciplinaId: 'd_fil', professorId: 'p_marcio', dia: 'Segunda', horarioId: 'h_4' },
-      { id: 's3_19', turmaIds: ['t_3fp', 't_3ti'], disciplinaId: 'd_red', professorId: 'p_daisa', dia: 'Segunda', horarioId: 'h_6' },
-      { id: 's3_20', turmaIds: ['t_3fp', 't_3ti'], disciplinaId: 'd_fis', professorId: 'p_pedro', dia: 'Segunda', horarioId: 'h_7' },
-
-      // Terça - destaques
-      { id: 's3_21', turmaIds: ['t_1bas'], disciplinaId: 'd_edfin', professorId: 'p_marcal', dia: 'Terça', horarioId: 'h_1' },
-      { id: 's3_22', turmaIds: ['t_2afp', 't_2bfp'], disciplinaId: 'd_did', professorId: 'p_ariane', dia: 'Terça', horarioId: 'h_1' },
-      { id: 's3_23', turmaIds: ['t_2ati', 't_2bti'], disciplinaId: 'd_to', professorId: 'p_alexandre', dia: 'Terça', horarioId: 'h_1' },
-      { id: 's3_24', turmaIds: ['t_3fp', 't_3ti'], disciplinaId: 'd_geo', professorId: 'p_marcelo', dia: 'Terça', horarioId: 'h_1' },
-      { id: 's3_25', turmaIds: ['t_1bas'], disciplinaId: 'd_fis_b', professorId: 'p_thiago', dia: 'Terça', horarioId: 'h_6' },
-      { id: 's3_26', turmaIds: ['t_1bas'], disciplinaId: 'd_fis_b', professorId: 'p_thiago', dia: 'Terça', horarioId: 'h_7' },
-
-      // Quarta - Ed. Física e Biologia
-      { id: 's3_27', turmaIds: ['t_1bas'], disciplinaId: 'd_edf', professorId: 'p_adriano', dia: 'Quarta', horarioId: 'h_2' },
-      { id: 's3_28', turmaIds: ['t_1bas'], disciplinaId: 'd_edf', professorId: 'p_adriano', dia: 'Quarta', horarioId: 'h_3' },
-      { id: 's3_29', turmaIds: ['t_2afp', 't_2ati'], disciplinaId: 'd_bio', professorId: 'p_mariane', dia: 'Quarta', horarioId: 'h_4' },
-      { id: 's3_30', turmaIds: ['t_3fp', 't_3ti'], disciplinaId: 'd_his', professorId: 'p_frederico', dia: 'Quarta', horarioId: 'h_4' },
-
-      // Quinta - Matemática A/B e Química
-      { id: 's3_31', turmaIds: ['t_1bas'], disciplinaId: 'd_mat_b', professorId: 'p_laio', dia: 'Quinta', horarioId: 'h_1' },
-      { id: 's3_32', turmaIds: ['t_2afp', 't_2ati'], disciplinaId: 'd_mat_a', professorId: 'p_diego', dia: 'Quinta', horarioId: 'h_3' },
-      { id: 's3_33', turmaIds: ['t_2bfp', 't_2bti'], disciplinaId: 'd_qui', professorId: 'p_lucas', dia: 'Quinta', horarioId: 'h_3' },
-      { id: 's3_34', turmaIds: ['t_3fp', 't_3ti'], disciplinaId: 'd_ing', professorId: 'p_carolina', dia: 'Quinta', horarioId: 'h_2' },
-
-      // Sexta - Ed. Inclusiva e Português
-      { id: 's3_35', turmaIds: ['t_2afp', 't_2bfp'], disciplinaId: 'd_edinc', professorId: 'p_fabricia', dia: 'Sexta', horarioId: 'h_1' },
-      { id: 's3_36', turmaIds: ['t_1bas'], disciplinaId: 'd_por', professorId: 'p_fabiana', dia: 'Sexta', horarioId: 'h_4' },
-      { id: 's3_37', turmaIds: ['t_1bas'], disciplinaId: 'd_mat_a', professorId: 'p_isabel', dia: 'Terça', horarioId: 'h_5' },
-      { id: 's3_38', turmaIds: ['t_1bas'], disciplinaId: 'd_lit', professorId: 'p_valeria', dia: 'Quarta', horarioId: 'h_1' }
-    ];
+    // Grade inicia vazia para alocação manual ou assistida pela coordenação
+    const alocacoes = [];
 
     return {
       disciplinas,
@@ -144,7 +92,7 @@
         {
           data: new Date().toISOString(),
           acao: 'carregamento',
-          detalhe: 'Dados de demonstração do Slide 3 carregados (23 professores, 7 turmas).'
+          detalhe: 'Base inicial carregada (23 professores, 7 turmas, 7 horários; grade vazia).'
         }
       ],
       gradeAprovada: false
